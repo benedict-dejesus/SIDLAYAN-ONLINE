@@ -42,9 +42,9 @@ const RANKS = [
   {lvl:3, xp:350,  name:'Researcher',           em:'🔎'},
   {lvl:4, xp:600,  name:'Reporter',             em:'🎤'},
   {lvl:5, xp:900,  name:'Producer',             em:'🎬'},
-  {lvl:6, xp:1300, name:'Anchor',               em:'📺'},
-  {lvl:7, xp:1800, name:'News Director',        em:'🗞️'},
-  {lvl:8, xp:2400, name:'Station Manager',      em:'📡'}
+  {lvl:6, xp:1200, name:'Anchor',               em:'📺'},
+  {lvl:7, xp:1500, name:'News Director',        em:'🗞️'},
+  {lvl:8, xp:1800, name:'Station Manager',      em:'📡'}
 ];
 
 /* A knowledge check with its options; the key and feedback are in AnswerKey.gs. */
@@ -541,12 +541,65 @@ f: {
     id:'f1', num:1, no:6, title:'How Powerful Is Broadcasting?', tag:'Final Term · Lesson 6',
     desc:'What television and radio can and cannot do to public opinion.',
     blocks:[
-      {t:'heading', lvl:2, text:'How Powerful Is Broadcasting?'},
-      {t:'text', html:'<p>Researchers have argued for a century about how strongly broadcasting shapes what people think. This lesson walks through the main answers, from agenda-setting to framing and cultivation.</p>'},
+      {t:'text', html:`
+        <p>Politicians spend fortunes on airtime, and governments fight over broadcast franchises. They clearly believe broadcasting is powerful. But how powerful, and in what way? For about a century, researchers have argued over the answer. The short version: broadcasting rarely tells people <em>what</em> to think, but it is very good at shaping <em>what they think about</em> and <em>how they see it</em>.</p>
+        <p>This matters for political economy because influence is what owners, advertisers and politicians are really buying. If you know which kind of influence media have, you can see more clearly why someone would want to control them.</p>`},
+
+      {t:'flipdeck', gate:'f1-flip', title:'A Century of Effects Research', kicker:'Flip to Reveal',
+       instr:'Flip all 6 cards, from the oldest idea to the newest.',
+       items:[
+         {ico:'💉', title:'The "magic bullet"', def:'An early, now-rejected idea that media messages hit a passive audience directly and change their minds. It shaped fears about wartime propaganda.'},
+         {ico:'👥', title:'Two-step flow (1955)', def:'Katz and Lazarsfeld found that media influence often passes through opinion leaders, the people others trust and talk to. Influence is real but filtered through relationships.'},
+         {ico:'📋', title:'Agenda-setting (1972)', def:'McCombs and Shaw found that the issues news covers most become the issues voters see as most important. Media tell us what to think about.'},
+         {ico:'🖼️', title:'Framing (1993)', def:'Entman described framing as selecting some aspects of a reality and making them more salient, promoting a particular definition, cause, judgment or solution. The same event can be framed as "chaos" or as "protest."'},
+         {ico:'📺', title:'Cultivation', def:'Gerbner and colleagues argued that heavy, long-term TV viewing slowly shapes viewers’ sense of social reality, for example making heavy viewers of crime shows see the world as more dangerous.'},
+         {ico:'⚡', title:'Priming', def:'By emphasizing some issues, media influence the standards people use to judge leaders. If the news is full of crime, voters judge leaders by their record on crime.'}
+       ]},
+
+      {t:'sorter', gate:'f1-dnd', badgeOnPerfect:'sorter',
+       title:'Which Effect Is This?', kicker:'Sorting Challenge',
+       instr:'Sort each example by the media effect it shows.<br><em>Desktop: drag &amp; drop. Phone: tap an example, then tap a box.</em>',
+       items:[
+         {id:'flood',   label:'🌊 Weeks of top-story flood coverage make voters rank disaster response as the biggest issue.'},
+         {id:'rally',   label:'📣 A rally is described as "chaos on the streets" instead of "workers demanding fair wages."'},
+         {id:'crime',   label:'🚨 Heavy viewers of crime shows believe their town is more dangerous than it is.'},
+         {id:'traffic', label:'🚗 Daily traffic reports make commuters see transport as the country’s top problem.'},
+         {id:'pork',    label:'💰 A budget item is called "pork barrel" instead of "development funds."'},
+         {id:'family',  label:'🏠 Years of teleseryes shape what viewers think a "normal" family looks like.'}
+       ],
+       cats:[{id:'agenda', label:'📋 Agenda-setting'},{id:'framing', label:'🖼️ Framing'},{id:'cultivation', label:'📺 Cultivation'}]},
+
       kc('f1-kc', 'Agenda-Setting',
          'According to agenda-setting research, the news media are most successful at telling us…',
          ['exactly what to think', 'which products to buy', 'what to think about', 'how to vote']),
-      cont('f1', ['f1-kc'], 'Continue to Lesson 7', '⚠️ Answer the knowledge check to continue.', 'f2', 2)
+
+      {t:'heading', lvl:2, text:'Final Term Activity 3: Programme Critique'},
+      {t:'text', html:`<p><strong>Task (Week 11).</strong> Choose one Philippine broadcast programme: a newscast, public-affairs show, talk show or teleserye. Watch at least three episodes. In 600–800 words, critique its influence on public opinion and society using at least two effects concepts from this lesson, and connect it to who owns and funds the programme.</p>`},
+      {t:'rubric', kicker:'Rubric R4 · How it is scored', title:'Activity 3: Programme Critique', when:'Submit in Week 11',
+       task:'Critique one Philippine broadcast programme’s influence on public opinion and society (600–800 words).',
+       crit:[
+         {name:'Description of the programme', pts:15, ex:'Identifies the programme, network, timeslot and format accurately, with episode details.'},
+         {name:'Use of effects concepts', pts:30, ex:'Applies at least two concepts (agenda-setting, framing, cultivation, priming) correctly with clear examples from the episodes.'},
+         {name:'Political economy connection', pts:25, ex:'Links the programme’s content to its owners, sponsors or business model.'},
+         {name:'Evidence and judgment', pts:20, ex:'Claims are supported by specific scenes or segments; the overall judgment is reasoned.'},
+         {name:'Organization and mechanics', pts:10, ex:'Clear structure, APA citations, within the word count.'}
+       ],
+       note:'Your own analysis only. AI-written critiques score 0.'},
+
+      {t:'text', html:`
+        <p><strong>📌 Recap</strong></p>
+        <ul>
+          <li>Media rarely tell people what to think, but strongly shape what they think about (agenda-setting) and how they see it (framing).</li>
+          <li>Influence is filtered through relationships (two-step flow) and builds up over time (cultivation).</li>
+          <li>Influence is what owners, advertisers and politicians are buying when they invest in broadcasting.</li>
+        </ul>
+        <p class="refs"><strong>References</strong><br>
+          Entman, R. M. (1993). Framing: Toward clarification of a fractured paradigm. <em>Journal of Communication, 43</em>(4), 51–58.<br>
+          Katz, E., &amp; Lazarsfeld, P. F. (1955). <em>Personal influence</em>. Free Press.<br>
+          McCombs, M. E., &amp; Shaw, D. L. (1972). The agenda-setting function of mass media. <em>Public Opinion Quarterly, 36</em>(2), 176–187.<br>
+          Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
+
+      cont('f1', ['f1-flip','f1-dnd','f1-kc'], 'Continue to Lesson 7', '⚠️ Finish the activities above to continue.', 'f2', 2)
     ]
   },
 
@@ -555,15 +608,83 @@ f: {
     id:'f2', num:2, no:7, title:'Advertising, News and Political Public Relations', tag:'Final Term · Lesson 7',
     desc:'Who pays for the news, and who tries to shape it.',
     blocks:[
-      {t:'heading', lvl:2, text:'Advertising, News and Political Public Relations'},
-      {t:'text', html:'<p>Advertising pays for most commercial broadcasting, and politicians invest heavily in managing how journalists cover them. This lesson follows the money and the messages.</p>'},
+      {t:'text', html:`
+        <p>Two groups work hard to shape what you see on the news without appearing on screen. <strong>Advertisers</strong> pay for most commercial broadcasting, so their preferences shape what gets made. <strong>Political public relations</strong> professionals work for politicians, parties and agencies to shape how journalists cover them.</p>
+        <p>Neither is automatically sinister. Advertising pays journalists’ salaries, and PR gives reporters information. The political economy question is how much influence each has, and whether the audience can see it.</p>`},
+
+      {t:'discover', gate:'f2-tabs', cols:2,
+       title:'Four Ways Advertising Shapes Content', kicker:'Discovery Grid',
+       instr:'Open all 4.',
+       items:[
+         {label:'Target audiences', ico:'🎯', title:'Programming for target audiences',
+          html:'<p>Advertisers pay more for audiences with spending power. Programmes that attract those viewers are favoured, and audiences advertisers do not want are underserved.</p>'},
+         {label:'Sponsored content', ico:'🏷️', title:'Advertorials and sponsored segments',
+          html:'<p>Paid content made to look like news or regular programming. Ethical practice requires it to be clearly labelled.</p>'},
+         {label:'Product placement', ico:'🥤', title:'Product placement',
+          html:'<p>Brands paid to appear inside shows, from teleseryes to morning programmes, blur the line between story and advertisement.</p>'},
+         {label:'Soft censorship', ico:'🤐', title:'Soft censorship',
+          html:'<p>Stories that might upset a big advertiser can be softened, delayed or dropped without anyone ordering it. This is the advertising filter you met in Lesson 3.</p>'}
+       ]},
+
+      {t:'heading', lvl:2, text:'Making news: journalists, politicians and PR'},
+      {t:'text', html:`
+        <p>Journalists need a steady supply of stories; politicians need coverage. Political PR sits in between, packaging events and statements so they are easy to report. Boorstin (1961) called events staged mainly to be reported <strong>pseudo-events</strong>: the press conference, the photo opportunity, the planned "surprise" visit.</p>
+        <p>In the Philippines, research by Ong and Cabañes (2018) found that advertising and PR strategists were the chief architects of networked political disinformation, running campaigns of paid influencers and fake accounts as undisclosed side work. The skills that sell products were being used to sell candidates, out of public view.</p>`},
+
+      {t:'match', gate:'f2-match',
+       title:'PR Toolkit Match', kicker:'Memory Minigame',
+       instr:'Pair each <strong>PR tactic</strong> with what it is. Fewer misses = more XP.',
+       pairs:[
+         {a:'Press release', b:'A ready-made statement written for journalists to reuse'},
+         {a:'Sound bite', b:'A short, quotable line made for broadcast'},
+         {a:'Spin', b:'Interpreting facts in the most favourable way'},
+         {a:'Photo op', b:'An event staged mainly for cameras'},
+         {a:'Leak', b:'Information passed unofficially to a reporter'},
+         {a:'Pseudo-event', b:'An event created mainly to be reported'}
+       ]},
+
+      {t:'quiz', mode:'multi', gate:'f2-mc', title:'Spot the Pseudo-Event', kicker:'Knowledge Check',
+       badgeText:'Select 2 answers',
+       q:'Which <strong>two</strong> of these are <strong>pseudo-events</strong>?',
+       opts:[{txt:'A typhoon makes landfall in Samar'},
+             {txt:'A ribbon-cutting arranged so the cameras can film a mayor'},
+             {txt:'The Supreme Court releases a decision'},
+             {txt:'A candidate’s "surprise" market visit, announced to the media the day before'},
+             {txt:'An earthquake damages a bridge'}]},
+
       kc('f2-kc', 'Political PR',
          'Which best describes political public relations?',
          ['The planned communication of politicians and parties to shape news coverage and public opinion',
           'A government office that licenses broadcasters',
           'Advertising that sells consumer products during the news',
           'Fact-checking done by independent journalists']),
-      cont('f2', ['f2-kc'], 'Continue to Lesson 8', '⚠️ Answer the knowledge check to continue.', 'f3', 3)
+
+      {t:'heading', lvl:2, text:'Final Term Activity 4: Advertising Campaign Case Analysis'},
+      {t:'text', html:`<p><strong>Task (Week 13).</strong> Choose one advertising campaign that ran on Philippine broadcast media (commercial or political). In 600–800 words, analyse its <strong>economic and political implications</strong>: who paid, who was targeted, what it sold or promoted, and what it reveals about advertising’s power over media.</p>`},
+      {t:'rubric', kicker:'Rubric R5 · How it is scored', title:'Activity 4: Advertising Campaign Case Analysis', when:'Submit in Week 13',
+       task:'Analyse the economic and political implications of one advertising campaign on Philippine broadcast media (600–800 words).',
+       crit:[
+         {name:'Description of the campaign', pts:15, ex:'Identifies the sponsor, media, timing, target audience and message accurately.'},
+         {name:'Economic analysis', pts:25, ex:'Explains the money involved: who paid, which outlets benefited, and why.'},
+         {name:'Political analysis', pts:25, ex:'Explains the campaign’s political meaning or effect, using lesson concepts.'},
+         {name:'Use of concepts and sources', pts:25, ex:'Applies advertising influence, PR or pseudo-event concepts; credible sources cited in APA 7.'},
+         {name:'Organization and mechanics', pts:10, ex:'Clear structure, within the word count, few errors.'}
+       ],
+       note:'Your own analysis only. AI-written analyses score 0.'},
+
+      {t:'text', html:`
+        <p><strong>📌 Recap</strong></p>
+        <ul>
+          <li>Advertising shapes content through target audiences, sponsored segments, product placement and soft censorship.</li>
+          <li>Political PR packages news for journalists; pseudo-events are staged mainly to be reported.</li>
+          <li>In the Philippines, advertising and PR strategists have been found behind networked political disinformation.</li>
+        </ul>
+        <p class="refs"><strong>References</strong><br>
+          Boorstin, D. J. (1961). <em>The image: A guide to pseudo-events in America</em>. Harper &amp; Row.<br>
+          Ong, J. C., &amp; Cabañes, J. V. A. (2018). <em>Architects of networked disinformation: Behind the scenes of troll accounts and fake news production in the Philippines</em>. Newton Tech4Dev Network. https://doi.org/10.7275/2cq4-5396<br>
+          Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
+
+      cont('f2', ['f2-tabs','f2-match','f2-mc','f2-kc'], 'Continue to Lesson 8', '⚠️ Finish the activities above to continue.', 'f3', 3)
     ]
   },
 
@@ -572,15 +693,78 @@ f: {
     id:'f3', num:3, no:8, title:'Media Politics and Campaigns', tag:'Final Term · Lesson 8',
     desc:'How elections are covered, and how campaigns use the media.',
     blocks:[
-      {t:'heading', lvl:2, text:'Media Politics and Campaigns'},
-      {t:'text', html:'<p>Election coverage decides which candidates and issues the public hears about. This lesson looks at the habits of campaign coverage and how to analyse them.</p>'},
+      {t:'text', html:`
+        <p>Election season is when the political economy of broadcasting is easiest to see. Candidates buy airtime, networks earn from political ads, and newsrooms decide which candidates and issues get attention. All of this happens under rules set by law and enforced by the Commission on Elections (COMELEC).</p>
+        <p>The <strong>Fair Election Act</strong> (Republic Act No. 9006, 2001) allows political advertising but limits it. For candidates for national office, it caps purchased or donated airtime at 120 minutes of television and 180 minutes of radio. How that cap should be counted, per station or in total, has itself been contested before COMELEC and the courts, which shows how much money and power ride on airtime.</p>`},
+
+      {t:'heading', lvl:2, text:'Habits of campaign coverage'},
+      {t:'compare', items:[
+        {badge:'Common', h:'🏇 Horse-race and personality coverage',
+         html:'<p>Who is ahead in the surveys? Who won the debate? Who has the most charming love story? This coverage is cheap, dramatic and easy to fill airtime with.</p>'},
+        {badge:'Needed', h:'📑 Issue-based coverage',
+         html:'<p>What will each candidate do about prices, jobs, health and disasters? This coverage costs more to produce, but it is what voters need to decide.</p>'}
+      ]},
+
+      {t:'sorter', gate:'f3-dnd', badgeOnPerfect:'sorter',
+       title:'What Kind of Coverage?', kicker:'Sorting Challenge',
+       instr:'Sort each headline by the kind of election coverage it is.<br><em>Desktop: drag &amp; drop. Phone: tap a headline, then tap a box.</em>',
+       items:[
+         {id:'survey',   label:'📊 "Candidate A up 3 points in latest survey"'},
+         {id:'rice',     label:'🍚 "What each candidate plans for rice prices"'},
+         {id:'dance',    label:'💃 "Candidate’s dance at rally goes viral"'},
+         {id:'debate',   label:'🥊 "Who won last night’s debate?"'},
+         {id:'health',   label:'🏥 "Comparing the candidates’ health-care plans"'},
+         {id:'romance',  label:'💞 "Inside the candidate’s love story"'}
+       ],
+       cats:[{id:'horse', label:'🏇 Horse-race'},{id:'issue', label:'📑 Issue-based'},{id:'person', label:'🌟 Personality'}]},
+
+      {t:'boss', gate:'f3-boss', optional:true,
+       title:'Speed Round: Campaign Season', emoji:'🗳️',
+       desc:'Eight questions. Ten seconds each. Every correct answer in a row multiplies your XP.',
+       time:10,
+       questions:[
+         {q:'Republic Act No. 9006 is also known as the…', opts:['Cybercrime Prevention Act','Fair Election Act','Data Privacy Act','Public Service Act']},
+         {q:'Under RA 9006, national candidates may buy up to how many minutes of TV airtime?', opts:['60','90','120','180']},
+         {q:'Coverage of who is ahead in the surveys is called…', opts:['Issue framing','Horse-race coverage','Agenda-setting','Cultivation']},
+         {q:'Focusing on a candidate’s private life rather than policy is…', opts:['Personalization','Spatialization','Commodification','Sourcing']},
+         {q:'Which body enforces election campaign rules in the Philippines?', opts:['NTC','COMELEC','MTRCB','PIDS']},
+         {q:'A short quotable line made for broadcast is a…', opts:['Leak','Sound bite','Press release','Photo op']},
+         {q:'Under RA 9006, national candidates may buy up to how many minutes of radio airtime?', opts:['90','120','180','240']},
+         {q:'Paid political ads on TV are mainly bought by…', opts:['The network','Candidates and parties','COMELEC','Viewers']}
+       ]},
+
       kc('f3-kc', 'Horse-Race Coverage',
          'What does "horse-race" election coverage focus on?',
-         ['The candidates\' detailed policy platforms',
+         ['The candidates’ detailed policy platforms',
           'The rules of the electoral commission',
-          'Voters\' personal stories',
+          'Voters’ personal stories',
           'Who is ahead or behind in the surveys, rather than the issues']),
-      cont('f3', ['f3-kc'], 'Continue to Lesson 9', '⚠️ Answer the knowledge check to continue.', 'f4', 4)
+
+      {t:'heading', lvl:2, text:'Final Term Activity 5: Election Coverage Analysis'},
+      {t:'text', html:`<p><strong>Task (Week 14).</strong> Analyse how one Philippine network covered an election campaign period, using at least five news segments or reports. Count how much was horse-race, issue-based and personality coverage, and explain what the pattern says about the network’s political economy. 600–800 words with a simple table or chart.</p>`},
+      {t:'rubric', kicker:'Rubric R6 · How it is scored', title:'Activity 5: Election Coverage Analysis', when:'Submit in Week 14',
+       task:'Analyse one network’s coverage during an election period using at least five segments (600–800 words with a table or chart).',
+       crit:[
+         {name:'Sample and data', pts:20, ex:'At least five segments, clearly identified, with a table or chart of coverage types.'},
+         {name:'Classification', pts:25, ex:'Segments are classified as horse-race, issue-based or personality correctly and consistently.'},
+         {name:'Political economy analysis', pts:30, ex:'Explains the pattern using ownership, advertising, political ads and election rules.'},
+         {name:'Sources', pts:15, ex:'Segments and other sources cited in APA 7.'},
+         {name:'Organization and mechanics', pts:10, ex:'Clear structure, within the word count, few errors.'}
+       ],
+       note:'Your own analysis only. AI-written analyses score 0.'},
+
+      {t:'text', html:`
+        <p><strong>📌 Recap</strong></p>
+        <ul>
+          <li>RA 9006 allows political ads but caps national candidates’ airtime (120 minutes of TV, 180 of radio); how to count the cap has been contested.</li>
+          <li>Horse-race and personality coverage is cheap and dramatic; issue-based coverage is what voters need.</li>
+          <li>Election coverage shows the links between airtime money, ratings and political power.</li>
+        </ul>
+        <p class="refs"><strong>References</strong><br>
+          Republic Act No. 9006. (2001). <em>Fair Election Act</em>. https://lawphil.net/statutes/repacts/ra2001/ra_9006_2001.html<br>
+          Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
+
+      cont('f3', ['f3-dnd','f3-kc'], 'Continue to Lesson 9', '⚠️ Finish the activities above to continue. The Speed Round is optional.', 'f4', 4)
     ]
   },
 
@@ -589,15 +773,63 @@ f: {
     id:'f4', num:4, no:9, title:'New Media and Political Futures', tag:'Final Term · Lesson 9',
     desc:'Platforms, networks and competition in the digital world.',
     blocks:[
-      {t:'heading', lvl:2, text:'New Media and Political Futures'},
-      {t:'text', html:'<p>Digital platforms now compete with broadcasters for audiences, advertising and political attention. This lesson explains the economics that give platforms their power.</p>'},
+      {t:'text', html:`
+        <p>Broadcasters once controlled the scarce airwaves. Today the scarce thing is <strong>attention</strong>, and digital platforms compete with networks for it, and for the advertising money that follows it. Networks now upload clips to video platforms, stream their shows and chase engagement on social media. Platforms, meanwhile, have become gatekeepers of what news reaches people.</p>
+        <p>The political economy questions have not changed: who owns, who pays, who controls, who benefits. Only the answers have moved.</p>`},
+
+      {t:'deck', gate:'f4-deck', title:'How Platforms Gain Power', kicker:'Card Deck',
+       instr:'Go through all 6 cards.',
+       items:[
+         {ico:'🕸️', title:'Network effects', html:'<p>A platform becomes more valuable to each user as more people use it. This pulls everyone toward a few giants and makes them hard to compete with.</p>'},
+         {ico:'🗄️', title:'Data as a commodity', html:'<p>Users pay with data instead of money. Behaviour is recorded, analysed and used to sell targeted advertising: the audience commodity, upgraded.</p>'},
+         {ico:'🧮', title:'Algorithmic gatekeeping', html:'<p>Ranking systems decide which posts and news stories people see. The editor’s old power to choose the lead story is now shared with code written by private companies.</p>'},
+         {ico:'⏳', title:'The attention economy', html:'<p>Platforms earn more when people stay longer, which rewards content that provokes strong emotions, including outrage and sensationalism.</p>'},
+         {ico:'🎥', title:'The creator economy', html:'<p>Independent creators and broadcasters alike depend on platform rules and revenue shares they do not control.</p>'},
+         {ico:'🎭', title:'Disinformation for hire', html:'<p>In the Philippines, Ong and Cabañes (2018) found political disinformation organized by advertising and PR strategists using paid influencers and fake accounts, a business model as much as a political tactic.</p>'}
+       ]},
+
+      {t:'quiz', mode:'multi', gate:'f4-mc', title:'Follow the Platform Money', kicker:'Knowledge Check',
+       badgeText:'Select 2 answers',
+       q:'Which <strong>two</strong> describe how free social media platforms mainly earn money?',
+       opts:[{txt:'Selling advertising targeted using users’ data'},
+             {txt:'Charging every user a monthly subscription'},
+             {txt:'Receiving a legislative franchise from Congress'},
+             {txt:'Taking a share of creators’ or sellers’ earnings on the platform'},
+             {txt:'Collecting a television licence fee'}]},
+
       kc('f4-kc', 'Network Effects',
          'What is a "network effect"?',
          ['A platform becomes slower as more people use it',
           'A platform becomes more valuable to each user as more people use it',
           'A TV network shares programmes with its regional stations',
           'A broadcast signal weakens over long distances']),
-      cont('f4', ['f4-kc'], 'Continue to Lesson 10', '⚠️ Answer the knowledge check to continue.', 'f5', 5)
+
+      {t:'heading', lvl:2, text:'Final Term Activity 6: Trend Analysis'},
+      {t:'text', html:`<p><strong>Task (Week 16, in groups).</strong> Pick one emerging new-media trend in the Philippines, such as live selling, news influencers, short-video platforms or AI-generated content. Analyse how it is changing political, social and economic life, and who gains power from it. Present for 8–10 minutes.</p>`},
+      {t:'rubric', kicker:'Rubric R7 · How it is scored', title:'Activity 6: New Media Trend Analysis', when:'Present in Week 16',
+       task:'Group presentation analysing one emerging new-media trend in the Philippines (8–10 minutes).',
+       crit:[
+         {name:'Description of the trend', pts:15, ex:'Explains the trend clearly with current Philippine examples.'},
+         {name:'Political, social and economic analysis', pts:35, ex:'Explains effects in all three arenas, supported by evidence.'},
+         {name:'Political economy lens', pts:25, ex:'Identifies who owns, pays, controls and benefits, using platform concepts.'},
+         {name:'Delivery and visuals', pts:15, ex:'Clear, organized, within time; visuals support the argument.'},
+         {name:'Sources and teamwork', pts:10, ex:'Sources cited; every member contributes.'}
+       ],
+       note:'Each member must speak. Cite your sources on your last slide.'},
+
+      {t:'text', html:`
+        <p><strong>📌 Recap</strong></p>
+        <ul>
+          <li>Attention is the new scarce resource; platforms and broadcasters compete for it and for advertising.</li>
+          <li>Network effects, data, algorithms and the attention economy give platforms power.</li>
+          <li>Disinformation can be a business model, run by marketing professionals.</li>
+        </ul>
+        <p class="refs"><strong>References</strong><br>
+          Mosco, V. (2009). <em>The political economy of communication</em> (2nd ed.). SAGE.<br>
+          Ong, J. C., &amp; Cabañes, J. V. A. (2018). <em>Architects of networked disinformation: Behind the scenes of troll accounts and fake news production in the Philippines</em>. Newton Tech4Dev Network. https://doi.org/10.7275/2cq4-5396<br>
+          Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
+
+      cont('f4', ['f4-deck','f4-mc','f4-kc'], 'Continue to Lesson 10', '⚠️ Finish the activities above to continue.', 'f5', 5)
     ]
   },
 
@@ -606,15 +838,59 @@ f: {
     id:'f5', num:5, no:10, title:'The Political Economy of Communication and the Commercialized Internet', tag:'Final Term · Lesson 10',
     desc:'From a public research network to an advertising machine, and your final paper.',
     blocks:[
-      {t:'heading', lvl:2, text:'The Political Economy of Communication and the Commercialized Internet'},
-      {t:'text', html:'<p>The internet began as a publicly funded research network and became one of the most commercial spaces in history. This lesson traces that shift and prepares you to pitch your final analytical paper.</p>'},
+      {t:'text', html:`
+        <p>The internet did not begin as a business. It grew out of publicly funded research networks built for scientists and the military. Within about a generation it became one of the most commercial spaces in human history, organized around advertising, data and a handful of very large companies.</p>
+        <p>This last lesson walks through that shift, introduces one influential way of describing where it has led, and prepares you to pitch your final analytical paper.</p>`},
+
+      {t:'timeline', gate:'f5-tl',
+       title:'From Public Network to Marketplace', kicker:'Timeline',
+       instr:'Open each milestone and tick it off as you read.',
+       steps:[
+         {title:'1969 · A public research network', html:'<p>ARPANET, funded by the United States government, links university and research computers.</p>'},
+         {title:'1989 · The World Wide Web is proposed', html:'<p>Tim Berners-Lee proposes the Web at CERN, a public research laboratory. It is later released for anyone to use.</p>'},
+         {title:'1994 · The Philippines goes online', html:'<p>On March 29, 1994, the Philippines makes its first full connection to the internet through the Philippine Network Foundation (PHNet).</p>'},
+         {title:'1995 · The backbone goes private', html:'<p>The publicly funded NSFNET backbone in the United States is retired; commercial providers take over carrying internet traffic.</p>'},
+         {title:'2000s · Advertising becomes the business model', html:'<p>Search engines and social networks offer free services funded by targeted advertising built on user data.</p>'},
+         {title:'Today · Platforms as gatekeepers', html:'<p>A few companies control how most people find news, entertainment and each other, and earn from the data their attention produces.</p>'}
+       ]},
+
+      {t:'text', html:`
+        <p><strong>Surveillance capitalism.</strong> Zuboff (2019) argues that the leading platforms turn human experience into behavioural data, use it to predict what people will do, and sell those predictions. This is Smythe’s audience commodity taken one step further: not only your attention is sold, but forecasts of your future behaviour.</p>
+        <p><strong>Back to the four questions.</strong> Who owns the internet’s infrastructure and platforms? Who pays for it, users or advertisers? Who controls what we see: editors, regulators or algorithms? And who benefits? Your final paper is your chance to answer one of these questions for a case you choose.</p>`},
+
       kc('f5-kc', 'Commercialization',
          'What does the "commercialization of the internet" refer to?',
          ['Making internet access free for everyone',
           'Replacing broadcasting with radio',
           'The shift from a public, research-based network to one organized around advertising, data and private profit',
           'Government ownership of all websites']),
-      cont('f5', ['f5-kc'], 'Complete Final Term Module 🎉', '⚠️ Answer the knowledge check to complete this module.', 'fc')
+
+      {t:'heading', lvl:2, text:'Final Project: Final Analytical Paper'},
+      {t:'text', html:`<p><strong>Pitch in Week 17, submit in Week 18.</strong> Write a 1,500–2,000 word analytical paper applying political economy to one Philippine media issue of your choice: ownership, a franchise, advertising, election coverage, platforms or disinformation. Your Week 17 pitch is a one-paragraph proposal with your question, your case and three sources.</p>`},
+      {t:'rubric', kicker:'Rubric R8 · How it is scored', title:'Final Project: Final Analytical Paper', when:'Submit in Week 18',
+       task:'A 1,500–2,000 word analytical paper applying political economy to one Philippine media issue.',
+       crit:[
+         {name:'Research question and argument', pts:20, ex:'A clear, focused question and a thesis the paper defends.'},
+         {name:'Use of political economy concepts', pts:25, ex:'Applies concepts from across the course accurately and critically.'},
+         {name:'Evidence and sources', pts:25, ex:'At least six credible sources, including Philippine data, cited in APA 7.'},
+         {name:'Analysis and conclusion', pts:20, ex:'Goes beyond description; explains who owns, pays, controls and benefits, and what follows.'},
+         {name:'Organization and mechanics', pts:10, ex:'Clear structure, within the word count, few errors.'}
+       ],
+       note:'Your own analysis only. AI tools may help you brainstorm if you disclose how; AI-written papers score 0.'},
+
+      {t:'text', html:`
+        <p><strong>📌 Recap</strong></p>
+        <ul>
+          <li>The internet moved from public research networks to a commercial space organized around advertising and data.</li>
+          <li>Surveillance capitalism extends the audience commodity: platforms sell predictions of behaviour.</li>
+          <li>The four questions still work: who owns, who pays, who controls, who benefits.</li>
+        </ul>
+        <p class="refs"><strong>References</strong><br>
+          Mosco, V. (2009). <em>The political economy of communication</em> (2nd ed.). SAGE.<br>
+          Smythe, D. W. (1977). Communications: Blindspot of Western Marxism. <em>Canadian Journal of Political and Social Theory, 1</em>(3), 1–27.<br>
+          Zuboff, S. (2019). <em>The age of surveillance capitalism</em>. PublicAffairs.</p>`},
+
+      cont('f5', ['f5-tl','f5-kc'], 'Complete Final Term Module 🎉', '⚠️ Finish the timeline and the knowledge check to complete this module.', 'fc')
     ]
   }
   ],
