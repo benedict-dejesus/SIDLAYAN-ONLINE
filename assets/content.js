@@ -82,8 +82,9 @@ m: {
        attr:'– Sir Kito'},
 
       {t:'text', html:`
-        <p>Mr. Benedict C. de Jesus (Sir Kito) is a licensed professional teacher who has been serving as a part-time instructor at Bulacan State University for 8 years. He is also an enthusiast of music, research, statistics, AI technology, and instructional design.</p>
-        <p>He has been a freelance research and thesis consultant for 16 years and a frequent guest lecturer and workshop facilitator for the City Government of Malolos.</p>`},
+        <p>Mr. Benedict C. de Jesus (Sir Kito) is a Licensed Professional Teacher and instructional designer who works where the humanities meet educational technology. He has been a part-time instructor at Bulacan State University since 2018 and is the adviser of <em>The Communique</em>, the official publication of the College of Arts and Letters. He holds a Bachelor of Secondary Education, major in English, from Bulacan State University and is completing his Master of Arts in Education, major in English, at La Consolacion University Philippines.</p>
+        <p>Before joining BulSU, he taught Senior High School at La Consolacion University Philippines, where he led the standardization of the research and capstone curricula, and taught English as a foreign language at JABEZ International Educational Center. He has been a freelance research and thesis consultant since 2010 and is a frequent guest lecturer and workshop facilitator for the City Government of Malolos. In 2026 he founded Arcana Learning and Process Solutions (ALPS), a learning-design startup where he serves as CEO.</p>
+        <p>He is also an enthusiast of music, research, statistics, and AI technology. He designed and built this SIDLAYAN module himself.</p>`},
 
       {t:'text', html:`
         <p><strong>Welcome, Section E · SIDLAYAN.</strong> You have met this course before, and that is an advantage: you already know where it gets hard. This module is built so the ideas stick this time. Each lesson is short, explains one idea at a time, and lets you check yourself as often as you like before anything is graded.</p>
