@@ -34,15 +34,15 @@ function deviceId() {
 const TERMS = { MT: 'Midterm', FT: 'Final Term' };
 const SLOTS = ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Exams'];
 /* This semester's planner has one quiz per term: the Midterm/Final Term Quiz goes in the Quiz 1 slot. */
-const SLOT_NAME = { 'Quiz 1': 'Term Quiz (Quiz 1)', 'Quiz 2': 'Quiz 2 (not in the planner)', 'Quiz 3': 'Quiz 3 (not in the planner)', 'Exams': 'Term Exam' };
+const SLOT_NAME = { 'Quiz 1': 'Quiz 1', 'Quiz 2': 'Quiz 2', 'Quiz 3': 'Quiz 3 (not in the syllabus)', 'Exams': 'Term Exam' };
 const QTYPES = { mc: 'Multiple choice', multi: 'Multiple answers', tf: 'True / False', ident: 'Identification', essay: 'Essay (you grade)' };
-const COLS = { 'MT|Quiz 1': 'E', 'MT|Quiz 2': 'F', 'MT|Quiz 3': 'G', 'MT|Exams': 'T',
-               'FT|Quiz 1': 'Y', 'FT|Quiz 2': 'Z', 'FT|Quiz 3': 'AA', 'FT|Exams': 'AN' };
-/* Default maximums, matching row 2 of a new class record tab (2026-2027: one
-   40-item term quiz and a 60-item exam). Quiz 2 and 3 are off (0) in the class
+/* Class-record column letters depend on the grading system in use, so the Studio names the column
+   (e.g. "Midterm Quiz 1") instead of printing a fixed letter. */
+/* Default maximums, matching row 2 of a new class record tab (BAB 303: two
+   20-point quizzes and a 60-item exam per term). Quiz 3 is off (0) in the class
    record; if a test is still put in those slots, it starts at 20 items. */
-const MAXES = { 'MT|Quiz 1': 40, 'MT|Quiz 2': 20, 'MT|Quiz 3': 20, 'MT|Exams': 60,
-                'FT|Quiz 1': 40, 'FT|Quiz 2': 20, 'FT|Quiz 3': 20, 'FT|Exams': 60 };
+const MAXES = { 'MT|Quiz 1': 20, 'MT|Quiz 2': 20, 'MT|Quiz 3': 20, 'MT|Exams': 60,
+                'FT|Quiz 1': 20, 'FT|Quiz 2': 20, 'FT|Quiz 3': 20, 'FT|Exams': 60 };
 const maxFor = t => MAXES[(t.term || 'MT') + '|' + (t.slot || 'Quiz 1')] || 20;
 
 const fmtDate = ms => ms ? new Date(ms).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '—';
@@ -315,7 +315,7 @@ function viewTests(box) {
       return `<section class="ad-sec"><h3 class="ad-sec-h">${TERMS[term]}</h3>
         <div class="ad-slots">${SLOTS.map(slot => {
           const here = list.filter(t => t.slot === slot);
-          return `<div class="ad-slot"><div class="ad-slot-h"><b>${h(SLOT_NAME[slot] || slot)}</b><span>Class record column ${COLS[term + '|' + slot]}</span></div>
+          return `<div class="ad-slot"><div class="ad-slot-h"><b>${h(SLOT_NAME[slot] || slot)}</b><span>Class record: ${h(TERMS[term])} ${h(slot === 'Exams' ? 'Exam' : slot)}</span></div>
             ${here.map(t => `
               <article class="ad-test" data-id="${h(t.id)}">
                 <div class="ad-test-top">${statusChip(t)}<span class="ad-muted">${t.perStudent && t.perStudent < t.questions ? `${t.perStudent} of ${t.questions}` : t.questions} q · ${t.minutes ? t.minutes + ' min' : 'untimed'} · ${t.max} pts</span></div>
@@ -515,9 +515,8 @@ function paintPlan() {
 }
 
 function colHint() {
-  const c = COLS[ED.test.term + '|' + ED.test.slot];
   const el = $('[data-colhint]');
-  if (el) el.innerHTML = `Scores post to <b>${TERMS[ED.test.term]} ${h(ED.test.slot)}</b> (column <b>${c}</b>) of each student's class record. A number you type there yourself is never overwritten.`;
+  if (el) el.innerHTML = `Scores post to <b>${TERMS[ED.test.term]} ${h(ED.test.slot)}</b> of each student's class record. A number you type there yourself is never overwritten.`;
 }
 
 function leaveEditor() {
