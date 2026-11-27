@@ -1,0 +1,4 @@
+# GitHub Pages: serve the files exactly as written.
+plugins: []
+exclude:
+  - README.md
