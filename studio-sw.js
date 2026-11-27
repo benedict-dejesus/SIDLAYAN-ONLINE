@@ -5,7 +5,7 @@
    It never touches requests to Apps Script (other origin) or anything that is
    not a plain GET, so no student data or session is ever cached. */
 'use strict';
-const CACHE = 'sidlayan-studio-v2';
+const CACHE = 'sidlayan-studio-v3';
 const SHELL = ['admin.html', 'assets/admin.css', 'assets/grades.css', 'assets/config.js', 'assets/content.js',
   'assets/grades.js', 'assets/admin.js', 'assets/icons/studio-192.png', 'studio.webmanifest'];
 
