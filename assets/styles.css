@@ -2188,3 +2188,9 @@ body{font-size:17px;font-feature-settings:'tnum' 0}
 /* SIDLAYAN · comparison cards without a photo: a slim banded header for the badge */
 .cmp-img.cmp-noimg{min-height:0;height:auto;padding:14px 16px 0;background:none}
 .cmp-img.cmp-noimg .cmp-badge{position:static;display:inline-block}
+
+/* SIDLAYAN · sorting: the whole box is a target; finger drag */
+.so-item{touch-action:none;-webkit-user-select:none;user-select:none}
+.so-cat{cursor:pointer}
+.so-pool.over{border-color:var(--accent);background:var(--accent-soft)}
+.so-ghost{position:fixed;z-index:900;pointer-events:none;margin:0;opacity:.95;transform:scale(1.04) rotate(-1deg);box-shadow:var(--shl);border-color:var(--accent);background:var(--white)}

@@ -1423,9 +1423,24 @@ const Init = {
     const tries = $('[data-tries]', node);
     let sel = null, attempts = 0;
 
+    /* Where an item lands: a category box (.so-cat) puts it in that box's item
+       area (.so-zone); the pool takes it back. The WHOLE box is a target, title
+       included, for taps, mouse drops and finger drags alike. */
+    const landingOf = box => box.classList.contains('so-cat') ? $('.so-zone', box) : box;
+    const place = (item, box)=>{
+      if(!item || !box || item.classList.contains('ok') || check.disabled) return;
+      landingOf(box).appendChild(item);
+      item.classList.remove('sel','dragging');
+      if(sel === item) sel = null;
+      Audio_.play('pop');
+    };
+    const boxes = $$('.so-cat, .so-pool', node);
+    const lit = box => boxes.forEach(x => x.classList.toggle('over', x === box));
+
     $$('.so-item', node).forEach(item=>{
       item.addEventListener('click', e=>{
         e.stopPropagation();
+        if(item.dataset.dragged){ delete item.dataset.dragged; return; }   // the end of a finger drag, not a tap
         if(item.classList.contains('ok')) return;
         if(sel === item){ item.classList.remove('sel'); sel = null; }
         else{
@@ -1434,34 +1449,77 @@ const Init = {
           Audio_.play('click');
         }
       });
+      /* Mouse: the browser's own drag and drop. */
       item.addEventListener('dragstart', e=>{
-        e.dataTransfer.setData('iid', item.dataset.id);
+        e.dataTransfer.setData('text/plain', item.dataset.id);
+        e.dataTransfer.effectAllowed = 'move';
         setTimeout(()=>item.classList.add('dragging'), 0);
       });
-      item.addEventListener('dragend', ()=> item.classList.remove('dragging'));
+      item.addEventListener('dragend', ()=>{ item.classList.remove('dragging'); lit(null); });
+
+      /* Finger or pen: phones do not start the browser's drag and drop, so the
+         item follows the finger and drops into the box under it on release. */
+      let drag = null;
+      item.addEventListener('pointerdown', e=>{
+        if(e.pointerType === 'mouse' || item.classList.contains('ok') || check.disabled) return;
+        drag = { id:e.pointerId, x:e.clientX, y:e.clientY, on:false, ghost:null };
+      });
+      item.addEventListener('pointermove', e=>{
+        if(!drag || e.pointerId !== drag.id) return;
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if(!drag.on){
+          if(Math.hypot(dx, dy) < 8) return;            // still a tap
+          drag.on = true;
+          try{ item.setPointerCapture(e.pointerId); }catch(err){}
+          const r = item.getBoundingClientRect();
+          drag.ghost = item.cloneNode(true);
+          drag.ghost.classList.add('so-ghost');
+          drag.ghost.style.width = r.width + 'px';
+          drag.ghost.style.left = r.left + 'px';
+          drag.ghost.style.top = r.top + 'px';
+          document.body.appendChild(drag.ghost);
+          item.classList.add('dragging');
+          drag.ox = drag.x - r.left; drag.oy = drag.y - r.top;
+        }
+        e.preventDefault();
+        drag.ghost.style.left = (e.clientX - drag.ox) + 'px';
+        drag.ghost.style.top = (e.clientY - drag.oy) + 'px';
+        const under = document.elementFromPoint(e.clientX, e.clientY);
+        lit(under && under.closest ? under.closest('.so-cat, .so-pool') : null);
+      });
+      const endDrag = e=>{
+        if(!drag || e.pointerId !== drag.id) return;
+        const d = drag; drag = null;
+        if(!d.on) return;                                // a plain tap: the click handler takes it
+        d.ghost.remove();
+        item.classList.remove('dragging');
+        lit(null);
+        item.dataset.dragged = '1';                      // swallow the click that follows the release
+        setTimeout(()=>{ delete item.dataset.dragged; }, 400);
+        if(e.type === 'pointercancel') return;
+        const under = document.elementFromPoint(e.clientX, e.clientY);
+        const box = under && under.closest ? under.closest('.so-cat, .so-pool') : null;
+        if(box && node.contains(box)) place(item, box);
+      };
+      item.addEventListener('pointerup', endDrag);
+      item.addEventListener('pointercancel', endDrag);
     });
 
-    $$('.so-zone, .so-pool', node).forEach(zone=>{
-      zone.addEventListener('click', ()=>{
-        if(!sel) return;
-        zone.appendChild(sel);
-        sel.classList.remove('sel');
-        sel = null;
-        Audio_.play('pop');
-      });
-      zone.addEventListener('dragover', e=>{
+    boxes.forEach(box=>{
+      box.addEventListener('click', ()=>{ if(sel) place(sel, box); });
+      box.addEventListener('dragover', e=>{
         e.preventDefault();
-        (zone.closest('.so-cat') || zone).classList.add('over');
+        e.dataTransfer.dropEffect = 'move';
+        lit(box);
       });
-      zone.addEventListener('dragleave', e=>{
-        if(!zone.contains(e.relatedTarget)) (zone.closest('.so-cat') || zone).classList.remove('over');
+      box.addEventListener('dragleave', e=>{
+        if(!box.contains(e.relatedTarget)) box.classList.remove('over');
       });
-      zone.addEventListener('drop', e=>{
+      box.addEventListener('drop', e=>{
         e.preventDefault();
-        (zone.closest('.so-cat') || zone).classList.remove('over');
-        const id = e.dataTransfer.getData('iid');
-        const it = node.querySelector(`.so-item[data-id="${id}"]`);
-        if(it){ zone.appendChild(it); it.classList.remove('dragging','sel'); sel = null; }
+        lit(null);
+        const id = e.dataTransfer.getData('text/plain');
+        place(node.querySelector(`.so-item[data-id="${CSS.escape(id)}"]`), box);
       });
     });
 
