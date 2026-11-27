@@ -685,7 +685,7 @@ const Blocks = {
     const n = el('div','block');
     const cards = b.items.map(it => `
       <div class="cmp-card">
-        <div class="cmp-img"><div class="cmp-badge">${esc(it.badge)}</div>${imgTag(it.img, it.alt)}</div>
+        <div class="cmp-img${it.img ? '' : ' cmp-noimg'}"><div class="cmp-badge">${esc(it.badge)}</div>${it.img ? imgTag(it.img, it.alt) : ''}</div>
         <div class="cmp-body"><h4>${it.h}</h4>${it.html}</div>
       </div>`);
     n.innerHTML = `<div class="cmp-grid">${cards[0]}<div class="cmp-vs"><span>VS</span></div>${cards[1]}</div>`;
@@ -800,7 +800,7 @@ const Blocks = {
       c.innerHTML = `
         <div class="fd-inner">
           <div class="fd-face fd-front">
-            <div class="fd-front-img">${imgTag(it.img, it.alt)}</div>
+            <div class="fd-front-img">${it.img ? imgTag(it.img, it.alt) : `<span class="fd-ico" aria-hidden="true">${it.ico || '◆'}</span>`}</div>
             <div class="fd-front-cap">
               <div class="fd-title">${esc(it.title)}</div>
               <div class="fd-hint">↻ Tap to flip</div>
@@ -828,7 +828,7 @@ const Blocks = {
       const c = el('div','dk-card' + (i===0 ? ' on' : ''));
       c.dataset.i = i;
       c.innerHTML = `
-        <div class="dk-img dk-in-anim">${imgTag(it.img, it.alt)}</div>
+        <div class="dk-img dk-in-anim${it.img ? '' : ' dk-noimg'}">${it.img ? imgTag(it.img, it.alt) : `<span class="dk-ico" aria-hidden="true">${it.ico || '◆'}</span>`}</div>
         <div class="dk-txt dk-in-anim">
           <div class="dk-num">${String(i+1).padStart(2,'0')} / ${String(b.items.length).padStart(2,'0')}</div>
           <h4>${esc(it.title)}</h4>${it.html}

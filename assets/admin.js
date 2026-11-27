@@ -1890,7 +1890,7 @@ function gbRows(box) {
    criterion is rated 4 Excellent · 3 Proficient · 2 Developing · 1 Beginning ·
    0 Missing; points = rating ÷ 4 × weight. The total (out of 100) is scaled to
    the column's maximum and typed into the cell, ready to save. */
-const GB_RUBRIC_FOR = { 'MT.pt1': 'R1', 'MT.pt2': 'R2', 'MT.pt3': 'R3', 'FT.pt1': 'R4', 'FT.pt2': 'R5', 'FT.pt3': 'R6' };
+const GB_RUBRIC_FOR = { 'MT.pt1': 'R1', 'MT.pt2': 'R2', 'MT.pt5': 'R3', 'FT.pt1': 'R4', 'FT.pt2': 'R5', 'FT.pt3': 'R6', 'FT.pt4': 'R7', 'FT.pt5': 'R8' };
 function gbRubrics() {
   const out = [];
   if (typeof CONTENT === 'undefined') return out;
