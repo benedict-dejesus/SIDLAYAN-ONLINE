@@ -1152,7 +1152,7 @@ function actShell(b, kind){
 }
 function kindIcon(k){
   return {pol:'📷', discover:'🔍', flip:'🃏', deck:'🎞️', sorter:'🎯',
-          quiz:'🧠', match:'🧩', timeline:'🗺️', strum:'🥁', market:'📈', owners:'🕸️'}[k] || '✨';
+          quiz:'🧠', match:'🧩', timeline:'🗺️', strum:'🥁', market:'📈', owners:'🕸️', game:'🎮'}[k] || '✨';
 }
 function addFoot(n, b, txt, gate){
   const f = el('div','act-foot');

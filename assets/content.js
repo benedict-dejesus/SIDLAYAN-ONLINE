@@ -325,6 +325,10 @@ m: {
       {t:'text', html:`
         <p><strong>A Philippine reminder.</strong> The relationship between the state and broadcasters is not only theory here. When martial law was declared in September 1972, independent newspapers and broadcast stations, including ABS-CBN, were shut down. Because broadcasters need a franchise from Congress, the question of who controls permission to broadcast remains a live political issue, as you will see in Lesson 5.</p>`},
 
+      {t:'sim-filters', gate:'m4-game',
+       title:'The Five Filters Newsroom', kicker:'Simulation Game',
+       instr:'You are the editor of tonight’s newscast. Six story pitches arrive, each under pressure. <strong>Name the filter behind each pressure</strong>, then decide whether to air the story. Finish the newscast to continue.'},
+
       {t:'boss', gate:'m4-boss', optional:true,
        title:'Speed Round: Media and Democracy', emoji:'⏱️',
        desc:'Eight questions. Ten seconds each. Every correct answer in a row multiplies your XP.',
@@ -359,7 +363,7 @@ m: {
           Herman, E. S., &amp; Chomsky, N. (1988). <em>Manufacturing consent: The political economy of the mass media</em>. Pantheon.<br>
           Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
 
-      cont('m4', ['m4-tabs','m4-flip','m4-kc'], 'Continue to Lesson 4', '⚠️ Finish the activities above to continue. The Speed Round is optional.', 'm5', 5)
+      cont('m4', ['m4-tabs','m4-flip','m4-game','m4-kc'], 'Continue to Lesson 4', '⚠️ Finish the activities above to continue. The Speed Round is optional.', 'm5', 5)
     ]
   },
 
@@ -388,6 +392,10 @@ m: {
        instr:'You run a fictional free-to-air station for one week. <strong>Move all three sliders</strong> and watch how programmes buy an audience, and how that audience is sold to advertisers.'},
 
       {t:'text', html:`<p><strong>What did you notice?</strong> Spending more on programmes raises ratings, but each extra peso buys less. Charging advertisers too much empties your ad breaks. Giving more airtime to news and public affairs costs a little in ratings. That last trade-off is the tension at the heart of commercial broadcasting: the public needs information, but the business rewards audience size.</p>`},
+
+      {t:'sim-copy', gate:'m5-game',
+       title:'First Copy, Many Screens', kicker:'Simulation Game',
+       instr:'One episode costs a lot to make and very little to show again. <strong>Show it on more outlets until the cost per viewer falls below the target</strong>, then explain why.'},
 
       {t:'sorter', gate:'m5-dnd', badgeOnPerfect:'sorter',
        title:'Who Pays?', kicker:'Sorting Challenge',
@@ -433,7 +441,7 @@ m: {
           Doyle, G. (2013). <em>Understanding media economics</em> (2nd ed.). SAGE.<br>
           Smythe, D. W. (1977). Communications: Blindspot of Western Marxism. <em>Canadian Journal of Political and Social Theory, 1</em>(3), 1–27.</p>`},
 
-      cont('m5', ['m5-deck','m5-sim','m5-dnd','m5-kc'], 'Continue to Lesson 5', '⚠️ Finish the activities above to continue.', 'm6', 6)
+      cont('m5', ['m5-deck','m5-sim','m5-game','m5-dnd','m5-kc'], 'Continue to Lesson 5', '⚠️ Finish the activities above to continue.', 'm6', 6)
     ]
   },
 
@@ -472,6 +480,10 @@ m: {
       {t:'ownership', gate:'m6-own',
        title:'Who Owns the Airwaves?', kicker:'Ownership Map',
        instr:'Tap a media group to see who owns it, what else it owns, and where the facts come from. <strong>Trace at least 3 groups</strong> to continue.'},
+
+      {t:'sim-merger', gate:'m6-game',
+       title:'Merger Desk', kicker:'Simulation Game',
+       instr:'A fictional media group buys six outlets and companies. <strong>Classify each deal</strong> as horizontal, vertical, cross-media or conglomerate, and watch how concentrated the market becomes.'},
 
       kc('m6-kc', 'Concentration',
          'What does "media ownership concentration" mean?',
@@ -516,7 +528,7 @@ m: {
           Serafica, R. B., &amp; Oren, Q. C. A. (2024). <em>Analysis of the competition landscape of Philippine mass media</em> (PIDS Discussion Paper No. 2024-29). Philippine Institute for Development Studies. https://www.pids.gov.ph/publication/discussion-papers/analysis-of-the-competition-landscape-of-philippine-mass-media<br>
           VERA Files &amp; Global Media Registry. (2023). <em>Media Ownership Monitor Philippines</em>. https://philippines.mom-gmr.org/en/</p>`},
 
-      cont('m6', ['m6-tabs','m6-own','m6-kc'], 'Complete Midterm Module 🎉', '⚠️ Finish the activities above to complete this module. The quest log is your project checklist.', 'mc')
+      cont('m6', ['m6-tabs','m6-own','m6-game','m6-kc'], 'Complete Midterm Module 🎉', '⚠️ Finish the activities above to complete this module. The quest log is your project checklist.', 'mc')
     ]
   }
   ],
@@ -570,6 +582,10 @@ f: {
        ],
        cats:[{id:'agenda', label:'📋 Agenda-setting'},{id:'framing', label:'🖼️ Framing'},{id:'cultivation', label:'📺 Cultivation'}]},
 
+      {t:'sim-agenda', gate:'f1-game',
+       title:'Newscast Lab', kicker:'Simulation Game',
+       instr:'Plan a week of news and frame one rally. <strong>Make the target issue the public’s top concern</strong> by moving coverage minutes, then <strong>tell the same rally two ways</strong>.'},
+
       kc('f1-kc', 'Agenda-Setting',
          'According to agenda-setting research, the news media are most successful at telling us…',
          ['exactly what to think', 'which products to buy', 'what to think about', 'how to vote']),
@@ -600,7 +616,7 @@ f: {
           McCombs, M. E., &amp; Shaw, D. L. (1972). The agenda-setting function of mass media. <em>Public Opinion Quarterly, 36</em>(2), 176–187.<br>
           Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
 
-      cont('f1', ['f1-flip','f1-dnd','f1-kc'], 'Continue to Lesson 7', '⚠️ Finish the activities above to continue.', 'f2', 2)
+      cont('f1', ['f1-flip','f1-dnd','f1-game','f1-kc'], 'Continue to Lesson 7', '⚠️ Finish the activities above to continue.', 'f2', 2)
     ]
   },
 
@@ -644,6 +660,10 @@ f: {
          {a:'Pseudo-event', b:'An event created mainly to be reported'}
        ]},
 
+      {t:'sim-pr', gate:'f2-game',
+       title:'PR Week', kicker:'Simulation Game',
+       instr:'Plan a fictional mayor’s week as the PR officer. <strong>Win enough news coverage AND teach voters enough</strong> by choosing each day’s event. Plan again as often as you need.'},
+
       {t:'quiz', mode:'multi', gate:'f2-mc', title:'Spot the Pseudo-Event', kicker:'Knowledge Check',
        badgeText:'Select 2 answers',
        q:'Which <strong>two</strong> of these are <strong>pseudo-events</strong>?',
@@ -685,7 +705,7 @@ f: {
           Ong, J. C., &amp; Cabañes, J. V. A. (2018). <em>Architects of networked disinformation: Behind the scenes of troll accounts and fake news production in the Philippines</em>. Newton Tech4Dev Network. https://doi.org/10.7275/2cq4-5396<br>
           Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
 
-      cont('f2', ['f2-tabs','f2-match','f2-mc','f2-kc'], 'Continue to Lesson 8', '⚠️ Finish the activities above to continue.', 'f3', 3)
+      cont('f2', ['f2-tabs','f2-match','f2-game','f2-mc','f2-kc'], 'Continue to Lesson 8', '⚠️ Finish the activities above to continue.', 'f3', 3)
     ]
   },
 
@@ -718,6 +738,10 @@ f: {
          {id:'romance',  label:'💞 "Inside the candidate’s love story"'}
        ],
        cats:[{id:'horse', label:'🏇 Horse-race'},{id:'issue', label:'📑 Issue-based'},{id:'person', label:'🌟 Personality'}]},
+
+      {t:'sim-airtime', gate:'f3-game',
+       title:'Airtime Ledger', kicker:'Simulation Game',
+       instr:'Buy TV and radio airtime for a fictional national candidate under the Fair Election Act. <strong>Reach the legal maximum, then see what changes when the cap is counted per station.</strong>'},
 
       {t:'boss', gate:'f3-boss', optional:true,
        title:'Speed Round: Campaign Season', emoji:'🗳️',
@@ -765,7 +789,7 @@ f: {
           Republic Act No. 9006. (2001). <em>Fair Election Act</em>. https://lawphil.net/statutes/repacts/ra2001/ra_9006_2001.html<br>
           Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
 
-      cont('f3', ['f3-dnd','f3-kc'], 'Continue to Lesson 9', '⚠️ Finish the activities above to continue. The Speed Round is optional.', 'f4', 4)
+      cont('f3', ['f3-dnd','f3-game','f3-kc'], 'Continue to Lesson 9', '⚠️ Finish the activities above to continue. The Speed Round is optional.', 'f4', 4)
     ]
   },
 
@@ -788,6 +812,10 @@ f: {
          {ico:'🎥', title:'The creator economy', html:'<p>Independent creators and broadcasters alike depend on platform rules and revenue shares they do not control.</p>'},
          {ico:'🎭', title:'Disinformation for hire', html:'<p>In the Philippines, Ong and Cabañes (2018) found political disinformation organized by advertising and PR strategists using paid influencers and fake accounts, a business model as much as a political tactic.</p>'}
        ]},
+
+      {t:'sim-feed', gate:'f4-game',
+       title:'Tune the Feed', kicker:'Simulation Game',
+       instr:'Set the ranking code of a fictional free platform. <strong>Complete both missions</strong>: hold users’ attention for the platform, then keep the information good while still holding them.'},
 
       {t:'quiz', mode:'multi', gate:'f4-mc', title:'Follow the Platform Money', kicker:'Knowledge Check',
        badgeText:'Select 2 answers',
@@ -830,7 +858,7 @@ f: {
           Ong, J. C., &amp; Cabañes, J. V. A. (2018). <em>Architects of networked disinformation: Behind the scenes of troll accounts and fake news production in the Philippines</em>. Newton Tech4Dev Network. https://doi.org/10.7275/2cq4-5396<br>
           Street, J. (2021). <em>Media, politics and democracy</em> (3rd ed.). Red Globe Press.</p>`},
 
-      cont('f4', ['f4-deck','f4-mc','f4-kc'], 'Continue to Lesson 10', '⚠️ Finish the activities above to continue.', 'f5', 5)
+      cont('f4', ['f4-deck','f4-game','f4-mc','f4-kc'], 'Continue to Lesson 10', '⚠️ Finish the activities above to continue.', 'f5', 5)
     ]
   },
 
@@ -858,6 +886,10 @@ f: {
       {t:'text', html:`
         <p><strong>Surveillance capitalism.</strong> Zuboff (2019) argues that the leading platforms turn human experience into behavioural data, use it to predict what people will do, and sell those predictions. This is Smythe’s audience commodity taken one step further: not only your attention is sold, but forecasts of your future behaviour.</p>
         <p><strong>Back to the four questions.</strong> Who owns the internet’s infrastructure and platforms? Who pays for it, users or advertisers? Who controls what we see: editors, regulators or algorithms? And who benefits? Your final paper is your chance to answer one of these questions for a case you choose.</p>`},
+
+      {t:'sim-data', gate:'f5-game',
+       title:'Your Data Day', kicker:'Simulation Game',
+       instr:'Follow a fictional student’s day on a free app and watch behaviour turn into data, and data into predictions. <strong>Complete both challenges</strong> by changing her settings.'},
 
       kc('f5-kc', 'Commercialization',
          'What does the "commercialization of the internet" refer to?',
@@ -891,7 +923,7 @@ f: {
           Smythe, D. W. (1977). Communications: Blindspot of Western Marxism. <em>Canadian Journal of Political and Social Theory, 1</em>(3), 1–27.<br>
           Zuboff, S. (2019). <em>The age of surveillance capitalism</em>. PublicAffairs.</p>`},
 
-      cont('f5', ['f5-tl','f5-kc'], 'Complete Final Term Module 🎉', '⚠️ Finish the timeline and the knowledge check to complete this module.', 'fc')
+      cont('f5', ['f5-tl','f5-game','f5-kc'], 'Complete Final Term Module 🎉', '⚠️ Finish the timeline, the game and the knowledge check to complete this module.', 'fc')
     ]
   }
   ],

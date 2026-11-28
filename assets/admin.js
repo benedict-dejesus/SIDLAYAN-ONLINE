@@ -1008,7 +1008,10 @@ const LC_TYPES = {
   flipdeck: ['🔄', 'Flip cards'], match: ['🧩', 'Memory match'], timeline: ['🗺', 'Quest steps'], quiz: ['✅', 'Knowledge check'],
   sorter: ['🗂', 'Sorting game'], boss: ['⚔️', 'Speed round'], continue: ['➡️', 'Continue button'], reveal: ['🔓', 'Section opened by Continue'],
   strum: ['🎸', 'Strum trainer'], 'sim-exposure': ['📷', 'Exposure simulator'], 'sim-guitar': ['🎸', 'Guitar chord simulator'],
-  rubric: ['📋', 'Rubric']
+  rubric: ['📋', 'Rubric'], 'sim-market': ['📈', 'Dual-Product Market simulator'], ownership: ['🕸️', 'Ownership map'],
+  'sim-filters': ['🎮', 'Game: The Five Filters Newsroom'], 'sim-copy': ['🎮', 'Game: First Copy, Many Screens'],
+  'sim-merger': ['🎮', 'Game: Merger Desk'], 'sim-agenda': ['🎮', 'Game: Newscast Lab'], 'sim-pr': ['🎮', 'Game: PR Week'],
+  'sim-airtime': ['🎮', 'Game: Airtime Ledger'], 'sim-feed': ['🎮', 'Game: Tune the Feed'], 'sim-data': ['🎮', 'Game: Your Data Day']
 };
 const LC_FREE = { heading: { t: 'heading', lvl: 2, text: '' }, text: { t: 'text', html: '<p></p>' }, quote: { t: 'quote', img: '', alt: '', html: '', attr: '' }, warn: { t: 'warn', title: '', html: '' } };
 const LC_STRUCT = new Set(['t', 'gate', 'xp', 'id', 'req', 'go', 'unlock', 'reveal', 'mode', 'optional', 'mono', 'cols', 'badgeOnPerfect', 'badgeOnDone', 'badgeOnClean', 'badgeOnClear', 'blocks']);
