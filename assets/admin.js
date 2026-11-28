@@ -738,7 +738,7 @@ function loadResults(box, id) {
   api('results.list', { testId: id }).then(res => {
     const rows = res.attempts, st = res.stats, t = res.test;
     $('[data-csv]', a).onclick = () => exportCsv(t, rows);
-    $('[data-regrade]', a).onclick = e => confirmBox('Regrade every submission?', 'Use this after correcting an answer key. Scores and the class record update.', 'Regrade')
+    $('[data-regrade]', a).onclick = e => confirmBox('Regrade every submission?', 'Use this after correcting an answer key, or to apply the deduction for leaving the quiz window to submissions made before it existed. Scores and the class record update.', 'Regrade')
       .then(ok => { if (!ok) return; busy(e.target, true, ''); api('tests.regrade', { id }).then(r => { toast(`Regraded ${r.regraded} submission(s).`); loadResults(box, id); }).catch(er => { busy(e.target, false); toast(er.message, 'bad'); }); });
     const pend = rows.filter(r => r.pending && r.status !== 'VOID').length;
     box.innerHTML = `
