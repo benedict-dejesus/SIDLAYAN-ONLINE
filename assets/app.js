@@ -470,6 +470,7 @@ const Grade = {
 /* ══════════════════════ GATES ══════════════════════ */
 const CONT_REQS   = {};   // continueId -> [gateIds]
 const CONT_ACTS   = {};   // continueId -> fn
+const CONT_GO     = {};   // continueId -> the lesson it opens (absent for in-lesson reveals)
 const REVEAL_REQS = {};   // revealSectionId -> [gateIds]
 
 /* Registered up-front (not at page-build time) so that progress restored from
@@ -520,12 +521,33 @@ window.refreshAllContinues = refreshAllContinues;
 function canCont(cid){
   return (CONT_REQS[cid] || []).every(g => S.gates[g]);
 }
+/** 'locked' when the lesson it opens is locked by the instructor, else 'ready' or 'waiting' on the activities. */
+function contState(cid){
+  if(CONT_GO[cid] && lessonBlocked(CONT_GO[cid])) return 'locked';
+  return canCont(cid) ? 'ready' : 'waiting';
+}
 function updCont(cid){
   const btn = document.getElementById(cid);
   if(!btn) return;
-  const ok = canCont(cid);
-  btn.disabled = !ok;
+  const state = contState(cid), ok = state === 'ready';
   const note = document.getElementById(cid + '-note');
+  if(btn.dataset.label == null) btn.dataset.label = btn.innerHTML;
+  if(note && note.dataset.text == null) note.dataset.text = note.innerHTML;
+  /* Locked: looks disabled, but stays tappable so a tap can explain why. */
+  btn.classList.toggle('locked', state === 'locked');
+  if(state === 'locked'){
+    const next = findLesson(CONT_GO[cid]);
+    btn.disabled = false;
+    btn.setAttribute('aria-disabled', 'true');
+    btn.classList.remove('ready');
+    btn.innerHTML = `🔒 ${esc(next ? lessonLabel(next) : 'The next lesson')} is locked`;
+    if(note){ note.innerHTML = `🔒 Your instructor has not opened ${esc(next ? lessonLabel(next) : 'the next lesson')} yet. Please wait for them to allow access.`; note.classList.remove('hide'); }
+    return;
+  }
+  btn.removeAttribute('aria-disabled');
+  btn.innerHTML = btn.dataset.label;
+  if(note) note.innerHTML = note.dataset.text;
+  btn.disabled = !ok;
   if(ok){
     btn.classList.add('pop-in','ready');
     if(note) note.classList.add('hide');
@@ -590,9 +612,36 @@ function lessonMod(pid){ return pid[0] === 'm' ? 'm' : 'f'; }
 function adminStatus(pid){
   try{ return (window.SDLPortal && SDLPortal.lessonStatus(pid)) || 'Open'; }catch(e){ return 'Open'; }
 }
-function lockedMsg(){
+/* A lesson the instructor has Locked or Hidden cannot be opened by any route
+   (Continue, resume, sidebar, search, Back). The Module Viewer and the lesson
+   editor's preview still open it, so the instructor can check it first. */
+function lessonBlocked(pid){
+  if(!findLesson(pid)) return false;
+  try{ if(window.SDLAuth && SDLAuth.isPreview && SDLAuth.isPreview()) return false; }catch(e){}
+  return adminStatus(pid) !== 'Open';
+}
+function lockedText(les){
+  const name = les ? `${lessonLabel(les)}: ${les.title}` : 'This lesson';
+  return { title: 'This lesson is still locked',
+           body: `${name} is not open yet. Please wait for your instructor to allow access to it.` };
+}
+/* A pop-up, not a passing toast: the student tried to go somewhere and needs to know why they cannot. */
+function lockedMsg(les){
   Audio_.play('wrong');
-  toast('🔒', 'Locked by your instructor', 'This lesson is not open yet. Check back later.');
+  const t = lockedText(les), card = $('#modal-card'), layer = $('#modal-layer');
+  if(!card || !layer){ toast('🔒', t.title, t.body); return; }
+  card.innerHTML = `
+    <div class="modal-hd">
+      <div><h3>🔒 ${esc(t.title)}</h3><p>Locked by your instructor</p></div>
+      <button class="modal-x" data-act="close" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-bd lock-bd">
+      <p class="lock-msg">${esc(t.body)}</p>
+      <button class="btn-cont ready lock-ok" data-act="close">OK, I’ll wait</button>
+    </div>`;
+  layer.classList.add('on');
+  $$('[data-act="close"]', card).forEach(b => b.addEventListener('click', closeModal));
+  const okBtn = $('.lock-ok', card); if(okBtn) try{ okBtn.focus(); }catch(e){}
 }
 
 function breadcrumb(pid){
@@ -1108,6 +1157,7 @@ const Blocks = {
     n.innerHTML = `
       <p class="cont-note" id="${esc(b.id)}-note">${b.note}</p>
       <button class="btn-cont" id="${esc(b.id)}" disabled>${esc(b.label)} <span class="arrow">→</span></button>`;
+    if(!b.reveal && b.go) CONT_GO[b.id] = b.go;
     CONT_ACTS[b.id] = ()=>{
       if(b.reveal){
         const sec = document.getElementById(b.reveal);
@@ -2389,7 +2439,7 @@ function buildTerminal(){
     card.addEventListener('click', ()=>{
       const k = card.dataset.mod;
       const firstLocked = CONTENT[k].lessons.find(l => !lessonComplete(l) && S.unlocked[k].includes(l.num) && adminStatus(l.id) === 'Open');
-      if(!firstLocked && adminStatus(CONTENT[k].lessons[0].id) !== 'Open'){ lockedMsg(); return; }
+      if(!firstLocked && lessonBlocked(CONTENT[k].lessons[0].id)){ lockedMsg(CONTENT[k].lessons[0]); return; }
       navigateTo(firstLocked ? firstLocked.id : CONTENT[k].lessons[0].id);
     });
   });
@@ -2490,6 +2540,7 @@ function initPage(pid){
   // continue buttons
   $$('.btn-cont', page).forEach(btn=>{
     btn.addEventListener('click', ()=>{
+      if(btn.classList.contains('locked')){ lockedMsg(findLesson(CONT_GO[btn.id])); return; }
       if(btn.disabled) return;
       Audio_.play('pop');
       const fn = CONT_ACTS[btn.id];
@@ -2506,6 +2557,8 @@ function initPage(pid){
    ══════════════════════════════════════════════════════════════ */
 function navigateTo(pid){
   if(pid === S.page){ closeSidebar(); closeSheet(); return; }
+  /* Every route into a lesson passes here: a locked one stays shut. */
+  if(lessonBlocked(pid)){ lockedMsg(findLesson(pid)); return; }
   S.hist.push(S.page);
   showPage(pid);
   closeSidebar();
@@ -2513,11 +2566,15 @@ function navigateTo(pid){
 }
 function goBack(){
   if(!S.hist.length) return;
-  const p = S.hist.pop();
+  let p = S.hist.pop();
+  while(lessonBlocked(p) && S.hist.length) p = S.hist.pop();   // skip lessons locked since they were visited
+  if(lessonBlocked(p)) p = 'terminal';
   showPage(p, true);
 }
 
 function showPage(pid, isBack){
+  /* Last line of defence (e.g. a lesson locked while the page is open elsewhere). */
+  if(lessonBlocked(pid)){ lockedMsg(findLesson(pid)); pid = 'terminal'; }
   const node = ensurePage(pid);
   if(!node) return;
 
@@ -2598,7 +2655,7 @@ function buildSidebar(){
         <span class="nav-title">${esc(les.title)}</span>
         <span class="nav-flag"></span>`;
       item.addEventListener('click', ()=>{
-        if(adminStatus(les.id) !== 'Open'){ lockedMsg(); return; }
+        if(lessonBlocked(les.id)){ lockedMsg(les); return; }
         if(!S.unlocked[k].includes(les.num)){
           Audio_.play('wrong');
           toast('🔒', 'Lesson locked', 'Complete the previous lesson to unlock this one.');
@@ -2692,7 +2749,7 @@ function buildSheet(){
         </span>
         <span class="sheet-flag"></span>`;
       it.addEventListener('click', ()=>{
-        if(adminStatus(les.id) !== 'Open'){ lockedMsg(); return; }
+        if(lessonBlocked(les.id)){ lockedMsg(les); return; }
         if(!S.unlocked[k].includes(les.num)){
           Audio_.play('wrong');
           toast('🔒','Lesson locked','Complete the previous lesson to unlock this one.');

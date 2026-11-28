@@ -978,6 +978,11 @@ button{font-family:inherit}
 }
 .btn-cont:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 12px 36px rgba(215,38,61,.46)}
 .btn-cont:disabled{background:rgba(148,163,184,.3);color:rgba(28,43,48,.35);cursor:not-allowed;box-shadow:none}
+/* Leads to a lesson the instructor locked: looks disabled, but a tap explains why (lockedMsg). */
+.btn-cont.locked,.btn-cont.locked:hover{background:rgba(148,163,184,.3);color:rgba(28,43,48,.55);cursor:not-allowed;box-shadow:none;transform:none}
+.lock-bd{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.lock-msg{font-size:15px;line-height:1.6;margin:0}
+.lock-ok{width:auto;min-height:44px}
 .btn-cont .arrow{font-size:19px;transition:transform var(--t)}
 .btn-cont:hover:not(:disabled) .arrow{transform:translateX(6px)}
 .btn-cont.ready{animation:readyPulse 2s ease-in-out infinite}
@@ -2132,6 +2137,7 @@ body{font-size:17px;font-feature-settings:'tnum' 0}
 .act-gate,.cont-note{color:#92400E}
 .act-gate.done{color:#047857}
 .btn-cont:disabled{background:rgba(11,31,58,.08);color:var(--muted)}
+.btn-cont.locked,.btn-cont.locked:hover{background:rgba(11,31,58,.08);color:var(--muted);box-shadow:none;transform:none}
 .btn-cont.ready{animation:none}
 .tl-chev{color:var(--muted)}
 .panel-left h2{color:var(--light)}

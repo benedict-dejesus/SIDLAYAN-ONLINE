@@ -1033,6 +1033,8 @@ window.SDLPortal = {
     try { const c = !(SDLAuth.isPreview && SDLAuth.isPreview()) && JSON.parse(lsGet(K_LESSONS) || 'null'); if (c) applyLessons(c); } catch (e) {}
     return withTimeout(SDLAuth.api('lessons', {}, 8000), 6000).then(res => {
       if (res && res.ok) { applyLessons(res); if (!(SDLAuth.isPreview && SDLAuth.isPreview())) lsSet(K_LESSONS, JSON.stringify({ overrides: res.overrides, custom: res.custom })); }
+      /* Locks may have changed since the cached copy: redraw any Continue already on screen. */
+      try { if (typeof window.refreshAllContinues === 'function') window.refreshAllContinues(); } catch (e) {}
     }).catch(() => {});
   },
 
