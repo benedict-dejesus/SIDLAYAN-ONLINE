@@ -755,9 +755,9 @@ function loadResults(box, id) {
         <tbody>${rows.length ? rows.map(r => `<tr class="${r.status === 'VOID' ? 'void' : ''}">
           <td><b>${h(r.name)}</b><small>${h(r.section)}</small></td>
           <td>${attPill(r)}</td>
-          <td class="num">${r.score == null ? '—' : `<b>${h(r.score)}</b><small>/ ${h(t.max)}</small>`}</td>
+          <td class="num">${r.score == null ? "—" : `<b>${h(r.score)}</b><small>/ ${h(t.max)}</small>${r.deduction ? `<small class="bad" title="Deducted for leaving the quiz window">−${h(r.deduction)}</small>` : ""}`}</td>
           <td class="num">${r.answered}/${r.items}</td>
-          <td class="num ${r.focus >= 5 ? 'hot' : ''}">${r.focus}</td>
+          <td class="num ${r.focus > 10 ? "hot" : ""}">${r.focus}</td>
           <td class="ad-muted">${r.submittedAt ? fmtDate(r.submittedAt) : r.status === 'IN_PROGRESS' ? 'Due ' + fmtDate(r.deadline) : '—'}</td>
           <td><button class="ad-btn sm ghost" data-open="${h(r.id)}">${r.pending ? 'Grade' : 'View'}</button></td></tr>`).join('')
           : '<tr><td colspan="7" class="ad-muted center">Nobody has started this test yet.</td></tr>'}</tbody></table></div></div>`;
@@ -782,8 +782,8 @@ function histogram(rows, max) {
 
 function exportCsv(t, rows) {
   const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-  const lines = [['Name', 'Section', 'Access Code', 'Status', 'Score', 'Out of', 'Points', 'Max Points', 'Left page', 'Submitted'].map(q).join(',')]
-    .concat(rows.map(r => [r.name, r.section, r.code, r.status, r.score, t.max, r.points, r.maxPoints, r.focus, r.submittedAt ? new Date(r.submittedAt).toLocaleString() : ''].map(q).join(',')));
+  const lines = [['Name', 'Section', 'Access Code', 'Status', 'Score', 'Out of', 'Points', 'Max Points', 'Left page', 'Deduction', 'Submitted'].map(q).join(',')]
+    .concat(rows.map(r => [r.name, r.section, r.code, r.status, r.score, t.max, r.points, r.maxPoints, r.focus, r.deduction || 0, r.submittedAt ? new Date(r.submittedAt).toLocaleString() : ''].map(q).join(',')));
   const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -805,7 +805,7 @@ function openAttempt(id, refresh) {
     const at = res.attempt, card = $('.ad-drawer-card', d), live = at.status === 'IN_PROGRESS';
     card.innerHTML = `
       <header class="ad-drawer-h"><div><span class="ad-kicker">${h(TERMS[res.test.term])} · ${h(res.test.slot)}</span><h3>${h(at.name)}</h3>
-        <p class="ad-muted">${h(at.section)} · ${h(String(at.code).replace(/^(.{3})(.{4})(.{4})$/, '$1-$2-$3'))} · left the page ${at.focus} time${at.focus === 1 ? '' : 's'}</p></div>
+        <p class="ad-muted">${h(at.section)} · ${h(String(at.code).replace(/^(.{3})(.{4})(.{4})$/, '$1-$2-$3'))} · left the page ${at.focus} time${at.focus === 1 ? '' : 's'}${at.deduction ? ` · <b class="bad">−${h(at.deduction)} points</b> for leaving the quiz window` : ''}</p></div>
         <button class="ad-icon" data-x aria-label="Close">✕</button></header>
       <div class="ad-drawer-score"><b>${at.score == null ? '—' : h(at.score)}</b><span>/ ${h(at.max)}</span><small>${live ? 'Still taking the test. Grade the essays after it is submitted.' : at.score == null ? 'Not scored yet.' : `${h(at.points)} of ${h(at.maxPoints)} points · ${at.posted === '' || at.posted == null ? 'not yet in the class record' : 'in the class record'}`}</small></div>
       <div class="ad-drawer-bd">${res.items.map(it => itemHtml(it, live)).join('')}</div>

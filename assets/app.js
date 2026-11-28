@@ -541,7 +541,7 @@ function updCont(cid){
     btn.setAttribute('aria-disabled', 'true');
     btn.classList.remove('ready');
     btn.innerHTML = `🔒 ${esc(next ? lessonLabel(next) : 'The next lesson')} is locked`;
-    if(note){ note.innerHTML = `🔒 Your instructor has not opened ${esc(next ? lessonLabel(next) : 'the next lesson')} yet. Please wait for them to allow access.`; note.classList.remove('hide'); }
+    if(note){ note.innerHTML = `🔒 ${esc(next ? lessonLabel(next) : "The next lesson")} is not open yet. Please wait for Sir Kito to grant you access to continue.`; note.classList.remove("hide"); }
     return;
   }
   btn.removeAttribute('aria-disabled');
@@ -623,7 +623,7 @@ function lessonBlocked(pid){
 function lockedText(les){
   const name = les ? `${lessonLabel(les)}: ${les.title}` : 'This lesson';
   return { title: 'This lesson is still locked',
-           body: `${name} is not open yet. Please wait for your instructor to allow access to it.` };
+           body: `${name} is not open yet. Please wait for Sir Kito to grant you access to continue.` };
 }
 /* A pop-up, not a passing toast: the student tried to go somewhere and needs to know why they cannot. */
 function lockedMsg(les){

@@ -330,3 +330,11 @@ body.px-running{overflow:hidden}
 .px-focus-list li{margin:4px 0;line-height:1.4}
 .px-focus-list small{color:var(--muted);margin-left:4px}
 .px-focus-go{background:none;border:0;padding:6px 0;min-height:40px;font:inherit;font-weight:700;color:var(--accent-deep,#A81B2E);text-align:left;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* Leaving the quiz window counts as cheating (2026-11-29): the start-screen
+   warning, the in-quiz reminder after a leave, and the released-score note. */
+.px-warn-box{margin:12px 0;padding:12px 14px;border-radius:12px;background:rgba(239,68,68,.08);border:1.5px solid rgba(239,68,68,.45);color:#7F1D1D;font-size:14px;line-height:1.55}
+.px-warn-box b{color:#991B1B}
+.pxr-warn{margin:8px 16px 0;padding:10px 14px;border-radius:10px;background:rgba(239,68,68,.1);border:1.5px solid rgba(239,68,68,.5);color:#7F1D1D;font-size:14px;line-height:1.5}
+.pxr-warn[hidden]{display:none}
+.px-deduct{margin-top:6px;padding:7px 10px;border-radius:8px;background:rgba(239,68,68,.08);color:#991B1B;font-size:12.5px;line-height:1.45}

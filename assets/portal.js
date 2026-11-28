@@ -296,7 +296,8 @@ function scoreLine(b) {
   if (b.score == null) return `<div class="px-score px-score-hidden">Score released by your instructor</div>`;
   const pct = b.max ? Math.round(b.score / b.max * 100) : 0;
   return `<div class="px-score"><b>${h(b.score)}</b><span>/ ${h(b.max)}</span><em>${pct}%</em>
-    ${b.pending ? `<small>· ${plural(b.pending, 'essay')} still being checked</small>` : ''}</div>`;
+    ${b.pending ? `<small>· ${plural(b.pending, 'essay')} still being checked</small>` : ''}</div>
+    ${b.deduction ? `<div class="px-deduct">⚠️ Includes a deduction of <b>${h(b.deduction)} ${b.deduction === 1 ? 'point' : 'points'}</b> for leaving the quiz window, against the instructions.</div>` : ''}`;
 }
 
 /* ═════════════════════════ TESTS PAGE ═════════════════════════ */
@@ -403,13 +404,14 @@ function confirmStart(t) {
         <div><b>${h(t.triesLeft)}</b><span>${t.triesLeft === 1 ? 'Attempt' : 'Attempts'} left</span></div>
       </div>
       ${t.instr ? `<div class="px-instr">${richText(t.instr)}</div>` : ''}
+      <div class="px-warn-box" role="note"><b>⚠️ Stay in this quiz window until you submit.</b>
+        Leaving the quiz window (switching to another app or browser tab, or locking your screen) is <b>considered cheating</b> and will be <b>penalized with point deductions</b>.</div>
       <ul class="px-rules">
         <li>The timer starts when you press <b>Begin</b> and keeps running even if you close the page.</li>
         <li>Your answers save automatically. If you lose connection, keep going: they are kept on this device and sent when you reconnect.</li>
-        <li>Leaving this page during the test is recorded for your instructor.</li>
         ${t.closes ? `<li>The test closes at <b>${h(fmtDate(t.closes))}</b>, even if you still have time left.</li>` : ''}
       </ul>
-      <label class="px-ready"><input type="checkbox" data-ready> <span><b>Academic Integrity.</b> I will answer on my own, use no unauthorized help, notes or AI tools, and not share the test contents with anyone who may take this course.</span></label>
+      <label class="px-ready"><input type="checkbox" data-ready> <span><b>Academic Integrity.</b> I will answer on my own, use no unauthorized help, notes or AI tools, stay in this quiz window until I submit, and not share the test contents with anyone who may take this course.</span></label>
       <div class="px-actions px-actions-end">
         <button class="px-btn px-btn-ghost" data-x type="button">Not yet</button>
         <button class="px-btn" data-go type="button" disabled>Begin</button>
@@ -462,6 +464,7 @@ function openRunner(res) {
       <div class="pxr-save" data-save aria-live="polite">Saved</div>
     </header>
     <div class="pxr-prog"><div class="pxr-prog-fill" data-prog></div></div>
+    <div class="pxr-warn" data-warn role="alert" hidden></div>
     <div class="pxr-body">
       <aside class="pxr-map" aria-label="Questions">
         <div class="pxr-map-h">Questions <span data-count></span></div>
@@ -506,7 +509,15 @@ function onVis() {
   if (document.visibilityState === 'hidden') {
     R.focus++; R.dirty = true; backup();
   } else {
-    toast('👀', 'You left the test page', 'Your instructor can see how often this happens.');
+    /* Back in the quiz: say plainly that leaving is cheating and costs points
+       (how the deduction is worked out is not explained). */
+    const times = R.focus === 1 ? 'once' : R.focus + ' times';
+    const w = R.node && R.node.querySelector('[data-warn]');
+    if (w) {
+      w.innerHTML = `⚠️ <b>You left the quiz window ${h(times)}.</b> Leaving the quiz window is considered cheating and is penalized with point deductions. Stay here until you submit.`;
+      w.hidden = false;
+    }
+    toast('⚠️', 'You left the quiz window', 'Leaving the quiz window is considered cheating and is penalized with point deductions.');
     save();
   }
 }
@@ -742,12 +753,14 @@ function finish(result, note) {
   const foot = R.node.querySelector('.pxr-foot');
   if (foot) foot.remove();
   R.node.querySelector('[data-timer]').classList.add('stopped');
+  const warn = R.node.querySelector('[data-warn]'); if (warn) warn.hidden = true;   // the result below says what it cost
   setSave('Submitted', 'ok');
   body.innerHTML = `
     <div class="pxr-result">
       ${show ? `<div class="pxr-ring" style="--deg:${deg}deg"><div><b>${h(r.score)}</b><span>of ${h(r.max)}</span></div></div>
         <h3>${pct >= 90 ? 'Outstanding!' : pct >= 75 ? 'Well done!' : pct >= 60 ? 'Nice effort.' : 'Submitted.'}</h3>
         <p>You scored <b>${h(r.points)}</b> of <b>${h(r.maxPoints)}</b> points (${pct}%).</p>
+        ${r.deduction ? `<div class="px-deduct">⚠️ Your score includes a deduction of <b>${h(r.deduction)} ${r.deduction === 1 ? 'point' : 'points'}</b> for leaving the quiz window, against the instructions.</div>` : ''}
         ${r.pending ? `<p class="pxr-note">${plural(r.pending, 'written answer')} will be checked by your instructor, so your score may go up.</p>` : ''}`
       : `<div class="pxr-check">✓</div><h3>Submitted</h3><p>Your instructor will release the scores.</p>`}
       ${note ? `<p class="pxr-note">${h(note)}</p>` : ''}
